@@ -89,11 +89,9 @@
     hasAnyRowConflicts: function() {
       //  loop through each row in board
       //    check if row has a conflict
-      for (var row in this.attributes) {
-        if (row !== 'n') {
-          if (this.hasRowConflictAt(parseInt(row))) {
-            return true;
-          }
+      for (let i = 0; i < this.attributes.n; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
         }
       }
       return false;
@@ -106,12 +104,25 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // make a counter;
+      // use for in loop on this.attributes[colIndex] counting the number of elements;
+      // if counter is greater than 1, return false. Otherwise return true;
+
+      let counter = 0;
+      for (let i = 0; i < this.attributes.n; i++) {
+        counter += this.attributes[i][colIndex];
+      }
+      return counter > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      for (let i = 0; i < this.attributes.n; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -121,12 +132,23 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let counter = 0;
+      for (let i = 0; i < this.attributes.n; i++) {
+        if (this._isInBounds(i, majorDiagonalColumnIndexAtFirstRow + i)) {
+          counter += this.attributes[i][majorDiagonalColumnIndexAtFirstRow + i];
+        }
+      }
+      return counter > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      for (let i = -(this.attributes.n) + 1; i < this.attributes.n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
