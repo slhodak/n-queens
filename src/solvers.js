@@ -42,14 +42,12 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  function factorial (n) {
-    if (n == 0 || n == 1)
-      return 1;
-    if (n > 0)
-      return factorial(n - 1) * n;
-  };
-  console.log('Number of solutions for ' + n + ' rooks:', factorial(n));
-  return factorial(n);
+  let counter = 0;
+
+  
+
+  console.log('Number of solutions for ' + n + ' rooks:', counter);
+  return counter;
 };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
@@ -83,7 +81,7 @@ window.findNQueensSolution = function(n) {
 
   }
   //  for each starting position on the first row
-placePieces();
+  placePieces();
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(board));
   return board.rows();
@@ -116,7 +114,42 @@ placePieces();
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0; //fixme
+  let board = new Board({n:n})
+  let counter = 0;
+  function placePieces(moveFwd) {
+    for (let i = moveFwd; i < n * n; i++) {
+      let row = Math.floor(i / board.attributes.n);
+      let column = i % board.attributes.n;
+      if (board.attributes[row][column] === 1) {
+        continue;
+      }
+      board.togglePiece(row, column);
+      counter++;
+      if (board.hasAnyQueensConflicts()) {
+        board.togglePiece(row, column);
+        counter--;
+      } else {
+        if (counter < n) {
+          placePieces(i);
+        }
+        if (counter === n) {
+          solutionCount++;
+          board.togglePiece(row, column);
+          counter--;
+        } else {
+          board.togglePiece(row, column);
+          counter--;
+        }
+      }
+    }
+  }
+  //  for each starting position on the first row
+  if (n > 0) {
+    placePieces(0);
+  } else {
+    solutionCount = 1;
+  }
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;

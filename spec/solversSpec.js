@@ -73,6 +73,7 @@ describe('solvers', function() {
         var solutionCount = countNQueensSolutions(n);
         var expectedSolutionCount = [1, 1, 0, 0, 2, 10, 4, 40, 92][n];
 
+        // expect('first').to.be.equal('second');
         expect(solutionCount).to.be.equal(expectedSolutionCount);
       });
     });
