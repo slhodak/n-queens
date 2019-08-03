@@ -1,7 +1,3 @@
-// This file is a Backbone Model (don't worry about what that means)
-// It's part of the Board Visualizer
-// The only portions you need to work on are the helper functions (below)
-
 (function() {
 
   window.Board = Backbone.Model.extend({
@@ -61,23 +57,6 @@
       );
     },
 
-
-    /*
-         _             _     _
-     ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
-    / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
-    \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
-    |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
-
-    */
-    /*=========================================================================
-    =                 TODO: fill in these Helper Functions                    =
-    =========================================================================*/
-
-    // ROWS - run from left to right
-    // --------------------------------------------------------------
-    //
-    // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
       let count = this.attributes[rowIndex].reduce(function(memo, curr) {
         return curr + memo;
@@ -97,17 +76,7 @@
       return false;
     },
 
-
-
-    // COLUMNS - run from top to bottom
-    // --------------------------------------------------------------
-    //
-    // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      // make a counter;
-      // use for in loop on this.attributes[colIndex] counting the number of elements;
-      // if counter is greater than 1, return false. Otherwise return true;
-
       let counter = 0;
       for (let i = 0; i < this.attributes.n; i++) {
         counter += this.attributes[i][colIndex];
@@ -115,7 +84,6 @@
       return counter > 1;
     },
 
-    // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       for (let i = 0; i < this.attributes.n; i++) {
         if (this.hasColConflictAt(i)) {
@@ -125,12 +93,6 @@
       return false;
     },
 
-
-
-    // Major Diagonals - go from top-left to bottom-right
-    // --------------------------------------------------------------
-    //
-    // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       let counter = 0;
       for (let i = 0; i < this.attributes.n; i++) {
@@ -141,7 +103,6 @@
       return counter > 1;
     },
 
-    // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
       for (let i = -(this.attributes.n) + 1; i < this.attributes.n; i++) {
         if (this.hasMajorDiagonalConflictAt(i)) {
@@ -151,12 +112,6 @@
       return false;
     },
 
-
-
-    // Minor Diagonals - go from top-right to bottom-left
-    // --------------------------------------------------------------
-    //
-    // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       let counter = 0;
       for (let i = 0; i < this.attributes.n; i++) {
@@ -167,7 +122,6 @@
       return counter > 1;
     },
 
-    // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       for (let i = 0; i < (this.attributes.n * 2) - 1; i++) {
         if (this.hasMinorDiagonalConflictAt(i)) {
@@ -176,7 +130,6 @@
       }
       return false;
     }
-    /*--------------------  End of Helper Functions  ---------------------*/
 
   });
 
